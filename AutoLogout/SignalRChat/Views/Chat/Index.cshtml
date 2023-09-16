@@ -1,0 +1,64 @@
+﻿@model SignalRChat.ViewModels.MessageViewModel
+
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<h2>Chat</h2>
+
+<div class="container">
+    <div class="card">
+        <form asp-action="SendMessage" method="post">
+            <div class="form-group">
+                <input type="text" asp-for="User" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="text" asp-for="Text" class="form-control" placeholder="Message" required>
+            </div>
+            <div class="form-row">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">发送消息</button>
+                    <button type="button" class="btn btn-danger" id="logoutButton">登出用户</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="chatMessages">
+    <!-- Display chat messages here -->
+</div>
+
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+     <script src="~/lib/microsoft-signalr/signalr.js"></script>
+
+    <script>
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.start().then(function () {
+            console.log("SignalR connected.");
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        connection.on("ReceiveMessage", function (user, message) {
+            // Display received message in the chatMessages div
+            var messageText = user + ": " + message + "<br />";
+            $("#chatMessages").append(messageText);
+        });
+
+        // Handle logout button click
+        $("#logoutButton").click(function () {
+            // Send logout command to the server
+            $.post("/Chat/Logout", function () {
+                console.log("Logout request sent.");
+                // Handle any additional logic for WPF logout if needed
+            });
+        });
+    </script>
+}

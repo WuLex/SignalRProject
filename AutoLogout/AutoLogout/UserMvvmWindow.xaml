@@ -1,0 +1,25 @@
+﻿<Window x:Class="AutoLogout.UserMvvmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoLogout"
+        mc:Ignorable="d"
+        Title="UserMvvmWindow" Height="650" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="聊天室" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,10" FontSize="20" Grid.Row="0" />
+        <ListBox ItemsSource="{Binding Messages}" Name="chatListBox" Height="300" Width="500" Background="AliceBlue" Grid.Row="1" />
+        <TextBox Text="{Binding NewMessage}" Width="400"  Grid.Row="2" Margin="0,10,0,10"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+            <Button Content="发送" Width="75" Command="{Binding SendMessageCommand}" Margin="10,0,0,0" Cursor="Hand" />
+            <!--<Button Content="登出" Width="75" Command="{Binding LogoutCommand}" Margin="10,0,0,0" />-->
+        </StackPanel>
+    </Grid>
+</Window>
