@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Notice>
+
+@{
+    ViewData["Title"] = "公告列表";
+}
+
+
+@section Styles {
+    <!-- 加载 Layui 的 CSS 文件 -->
+    <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
+}
+
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md8">
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>标题</th>
+                        <th>内容</th>
+                        <th>发布时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var notice in Model)
+                    {
+                        <tr>
+                            <td>@notice.Title</td>
+                            <td>@notice.Content</td>
+                            <td>@notice.CreatedAt</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-col-md4">
+            @*method="post" action="/Notice/PostNotice"*@
+            <form class="layui-form" lay-filter="formSubmit">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-block">
+                        <textarea name="Content" class="layui-textarea" required lay-verify="required" placeholder="请输入内容"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formSubmit">发布公告</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/layui/layui.js"></script>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+
+            // 监听提交
+            form.on('submit(formSubmit)', function (data) {
+                // 获取表单数据
+                var formData = data.field;
+
+                // 发送Ajax请求
+                $.ajax({
+                    url: '/Notice/PostNotice',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: formData,
+                    success: function (response) {
+                        // 在成功时，刷新页面以显示新的公告
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        // 处理错误
+                        console.error(error);
+                    }
+                });
+
+                // 阻止表单提交
+                return false;
+            });
+        });
+    </script>
+}

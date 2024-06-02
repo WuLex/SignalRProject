@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="layui-container layui-form" style="margin-top: 20px;">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <button id="joinGroup" class="layui-btn layui-btn-primary">加入私有组</button>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-top: 20px;">
+        <div class="layui-col-md12">
+            <textarea id="message" placeholder="输入你的消息" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-top: 20px;">
+        <div class="layui-col-md6">
+            <select id="group" name="group" lay-verify="">
+                <option value="All">Everyone</option>
+                <option value="Myself">Myself</option>
+                <option value="PrivateGroup">私有组</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 20px;">
+        <div class="layui-col-md6">
+            <button id="sendButton" class="layui-btn">发送消息</button>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 20px;">
+        <div class="layui-col-md12">
+            <div id="messages" class="layui-card">
+                <!-- 消息将出现在这里 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/layui/layui.js"></script>
+<script src="~/lib/microsoft-signalr/signalr.js"></script>
+<script src="~/js/message.js"></script>
+<script>
+    layui.use(['form'], function() {
+        var form = layui.form; 
+        // 渲染表单
+        form.render();
+    });
+</script>
+</body>
+</html>

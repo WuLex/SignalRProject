@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SignalRChat.styles.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false) <!-- CSS 文件加载占位符 -->
 </head>
 <body>
     <header>
@@ -45,5 +46,26 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="~/lib/microsoft-signalr/signalr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
+
+        connection.on("ReceiveNotice", function (notice) {
+            // 接收到新消息时，展示在页面右上角
+            Swal.fire({
+                icon: 'info',
+                title: notice.title,
+                text: notice.content,
+            });
+        });
+
+        connection.start().then(function () {
+            console.log("SignalR Connected.");
+        }).catch(function (err) {
+            console.error(err.toString());
+        });
+    </script>
 </body>
 </html>

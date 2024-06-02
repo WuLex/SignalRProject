@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="AutoLogout.Ucs.ModalDialog"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400" Background="#99000000" IsHitTestVisible="True">
+
+    <Grid>
+        <!-- 这里可以定义弹出框的内容和样式 -->
+        <Border Background="White" CornerRadius="5">
+            <StackPanel>
+                <ContentPresenter Content="{Binding DialogContent}" />
+                <!-- 添加你的弹出框内容 -->
+                <!--<TextBlock Text="这是一个全局弹出框" />-->
+                <!-- 其他控件和内容 -->
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
